@@ -23,15 +23,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  .left {
-    margin-left: 20px;
-  }
   .middle {
     font-size: 16px;
     font-weight: 600;
-  }
-  .right {
-    margin-right: 20px;
   }
 }
 </style>

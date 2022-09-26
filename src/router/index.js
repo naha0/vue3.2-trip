@@ -20,6 +20,12 @@ const routes = [
   {
     path: "/order",
     component: () => import("@/views/order/index.vue"),
+  },{
+    path: "/city",
+    component: () => import("@/views/city/index.vue"),
+    meta:{
+      tabbarHidden:true
+    }
   },
 ];
 
