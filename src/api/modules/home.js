@@ -5,3 +5,18 @@ export function getHomeHotSuggest(){
         url:'/home/hotSuggests'
     })
 }
+
+export function getHomeCategories(){
+    return zRequest.get({
+        url:'/home/categories'
+    })
+}
+
+export function getHomeHouseList(page){
+    return zRequest.get({
+        url:'home/houselist',
+        params:{
+            page
+        }
+    })
+}

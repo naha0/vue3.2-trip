@@ -41,24 +41,40 @@
 
     <!-- 热门建议 -->
     <div class="hot-suggest">
-      <template v-for="(item,index) in hotSuggest" :key="index">
-        <div class="item" :style="{color:item.tagText.color,background:item.tagText.background.color}">{{item.tagText.text}}</div>
+      <template v-for="(item, index) in hotSuggestAll" :key="index">
+        <div
+          class="item"
+          :style="{
+            color: item.tagText.color,
+            background: item.tagText.background.color,
+          }"
+        >
+          {{ item.tagText.text }}
+        </div>
       </template>
+    </div>
+
+    <!-- 搜索按钮 -->
+    <div class="section search-btn">
+      <div class="btn" @click="searchClick">开始搜索</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,computed } from "vue";
 import NavBar from "@/components/nav-bar/index.vue";
 import { useRouter } from "vue-router";
 import useCityStore from "@/store/modules/city";
+import useHomeStore from "@/store/modules/home";
+import useMainStore from "@/store/modules/main";
+
 import { storeToRefs } from "pinia";
 import { monthDayTime, getDiffDays } from "@/utils/format";
 const router = useRouter();
 const cityStore = useCityStore();
-const homeStore = useHomeStore()
-
+const homeStore = useHomeStore();
+const mainStore = useMainStore();
 
 const positionClick = () => {
   navigator.geolocation.getCurrentPosition(
@@ -103,14 +119,31 @@ const formatter = (day) => {
 const onConfirm = (values) => {
   const [start, end] = values;
   show.value = false;
-  startDate.value = monthDayTime(start);
-  endDate.value = monthDayTime(end);
-  liveTime.value = getDiffDays(start, end);
+  startDate.value = computed(() => monthDayTime(start));
+  endDate.value = computed(() => monthDayTime(end));
+  liveTime.value = computed(() => getDiffDays(start, end));
 };
 
 // 获取热门建议
-const hotSuggest = ref([]);
-hotSuggest.value = homeStore.hotSuggestAll
+const { hotSuggestAll } = storeToRefs(homeStore);
+
+// 开始搜索
+const searchClick = () => {
+  router.push({
+    path: "/search",
+    query: {
+      startDate: startDate.value,
+      endDate: endDate.value,
+      selectCity: selectCity.value.cityName,
+    },
+  });
+};
+
+// 得到日期并且存到mainStore中
+mainStore.$patch({
+  startDate: startDate.value,
+  endDate: endDate.value,
+});
 </script>
 
 <style lang="less" scoped>
@@ -158,20 +191,33 @@ hotSuggest.value = homeStore.hotSuggestAll
       }
     }
   }
-  .keyword{
+  .keyword {
     color: #252829;
   }
 
-  .hot-suggest{
+  .hot-suggest {
     display: flex;
     flex-wrap: wrap;
 
-    .item{
+    .item {
       padding: 5px 11px;
       border-radius: 10px;
       margin: 5px 3px;
       font-size: 12px;
       line-height: 1;
+    }
+  }
+  .search-btn {
+    .btn {
+      width: 342px;
+      height: 38px;
+      max-height: 50px;
+      line-height: 38px;
+      border-radius: 20px;
+      background-image: var(--theme-linear-gradient);
+      text-align: center;
+      color: #fff;
+      font-weight: 600;
     }
   }
 }

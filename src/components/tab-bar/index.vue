@@ -1,20 +1,11 @@
 <template>
   <div class="tab-bar">
-    <!-- <template v-for="(item, index) in tabBarData" :key="index">
-      <div
-        class="tab-bar-item"
-        @click="getPath(item, index)"
-        :class="{ active: currentIndex === index }"
-      >
-        <img :src="currentIndex===index?getImage(item.activeImage):getImage(item.image)" />
-        <span>{{ item.title }}</span>
-      </div>
-    </template> -->
-    <van-tabbar v-model="currentIndex" active-color="#ff9854">
+    <van-tabbar route v-model="currentIndex" active-color="#ff9854" @change="currentClick">
       <template v-for="(item, index) in tabBarData" :key="index">
         <van-tabbar-item
           @click="currentIndex = index"
           :class="{ active: currentIndex === index }"
+          replace
           :to="item.path"
         >
           <span>{{ item.title }}</span>
@@ -36,9 +27,17 @@
 <script setup>
 import tabBarData from "@/assets/data/tab-bar.js";
 import getImage from "@/utils/getImage.js";
-import { ref } from "vue";
+import { ref,watch } from "vue";
+import { useRoute } from "vue-router";
 
-const currentIndex = ref(0);
+const route = useRoute()
+const currentIndex = ref();
+watch(route,(newValue,oldValue)=>{
+  currentIndex.value = tabBarData.findIndex(item=>item.path === newValue.path)
+})
+const currentClick = () =>{
+  console.log(currentIndex.value);
+}
 </script>
 
 <style lang="less" scoped>
