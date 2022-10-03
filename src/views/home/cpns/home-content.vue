@@ -4,7 +4,7 @@
     <div class="gridBox">
       <template v-for="(item, index) in houseList" :key="index">
         <template v-if="item.discoveryContentType === 9">
-          <div class="type9Box">
+          <div class="type9Box" @click="getClick(item)">
             <img :src="item.data.image.url" />
             <div class="box-text">
               <div class="box-title">{{ item.data.summaryText }}</div>
@@ -25,7 +25,7 @@
           </div>
         </template>
         <template v-else-if="item.discoveryContentType === 3">
-          <div class="type3Box">
+          <div class="type3Box" @click="getClick(item)">
             <img :src="item.data.image.url" />
             <div class="location">
               <img src="@/assets/img/home/location.png" />
@@ -51,15 +51,21 @@
 import useHomeStore from "@/store/modules/home";
 import { storeToRefs } from "pinia";
 import handlerScrollToEnd from "@/hooks/useScroll";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const homeStore = useHomeStore();
 const { houseList } = storeToRefs(homeStore);
-
 
 handlerScrollToEnd(() => {
   homeStore.pageCount++;
   homeStore.getHouseList();
 });
+
+const getClick = (item) => {
+  console.log(item.data.houseId);
+  router.push("/detail/" + item.data.houseId);
+};
 </script>
 
 <style lang="less" scoped>

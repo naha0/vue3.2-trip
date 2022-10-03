@@ -8,7 +8,7 @@
     </div>
     <home-search-box></home-search-box>
     <home-categories></home-categories>
-    <div class="stickyBox" v-if="showStickySearch">
+    <div class="fixedBox" v-if="showStickySearch">
       <search-bar></search-bar>
     </div>
     <home-content></home-content>
@@ -54,8 +54,8 @@ watch(scrollTop, (newValue, oldValue) => {
       width: 100%;
     }
   }
-  .stickyBox {
-    position: sticky;
+  .fixedBox {
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;

@@ -1,7 +1,9 @@
 :root {
   --primary-color: #ff9854;
   --van-search-left-icon-color: var(--primary-color) !important;
-  --theme-linear-gradient:linear-gradient(90deg,#fa8c1d,#fcaf3f);
+  --theme-linear-gradient: linear-gradient(90deg, #fa8c1d, #fcaf3f);
+  --van-primary-color: var(--primary-color) !important;
+  --van-popup-background-color: #e8eaef !important;
 }
 
 body {
@@ -9,10 +11,10 @@ body {
   font-family: "Courier New", Courier, monospace;
 }
 
-.HomeContent{
+.HomeContent {
   margin: 0 20px 0 20px;
 }
 
-.section{
+.section {
   margin: 15px 0 8px 0;
 }

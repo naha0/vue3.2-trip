@@ -32,6 +32,12 @@ const routes = [
     meta:{
       tabbarHidden:true
     }
+  },{
+    path: "/detail/:id",
+    component: () => import("@/views/detail/index.vue"),
+    meta:{
+      tabbarHidden:true
+    }
   },
 ];
 
