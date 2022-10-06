@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 defineProps({
   titles: {
     type: Array,
@@ -21,7 +21,12 @@ const emit = defineEmits(["getActive"]);
 const changeActive = () => {
   emit("getActive", active.value);
 };
+const changeActiveIndex = (currentActive) => {
+  active.value = currentActive;
+};
+defineExpose({
+  changeActiveIndex,
+});
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

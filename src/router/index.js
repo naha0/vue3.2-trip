@@ -16,6 +16,9 @@ const routes = [
   {
     path: "/message",
     component: () => import("@/views/message/index.vue"),
+    meta:{
+      tabbarHidden:true
+    }
   },
   {
     path: "/order",

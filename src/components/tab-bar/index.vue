@@ -31,7 +31,7 @@ import { ref,watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute()
-const currentIndex = ref();
+const currentIndex = ref(0);
 watch(route,(newValue,oldValue)=>{
   currentIndex.value = tabBarData.findIndex(item=>item.path === newValue.path)
 })
